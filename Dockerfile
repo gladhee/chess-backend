@@ -10,10 +10,10 @@ RUN chmod +x ./gradlew && \
     ./gradlew :app:clean :app:bootJar --no-daemon && \
     ls -l app/build/libs/
 
-# Stage 2: Run
-FROM openjdk:21-jdk-slim
 WORKDIR /app
 # 빌드 단계에서 생성된 JAR 파일을 복사 (실제 JAR 파일 이름에 맞게 와일드카드를 사용)
 COPY --from=build /home/gradle/project/app/build/libs/*.jar app.jar
+
+EXPOSE 8080
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
